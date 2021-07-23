@@ -20,6 +20,9 @@
 </body>
 <script>
 
+
+    var currentpage = false;
+
     // setting up the canvas and one paper tool
     var canvas = document.getElementById('myCanvas');
     paper.setup(canvas);
@@ -38,12 +41,21 @@
        path.add(event.point);
        // You may need to add code here if you want to pass any other information.
        socket.send("{\"x\" : " + event.point.x + ", \"y\" : " + event.point.y + ", \"uid\" : " + uid + "}" );
+       currentpage = true;
     }
 
     socket.onmessage = function(receivedMessage) {
         var received = JSON.parse(receivedMessage.data);
         console.log("Received: " + JSON.stringify(received));
         // You will probably want to add some code here to draw more lines.
+
+        if (currentpage === false) {
+            path.add(received);
+        }
+
+        if (currentpage === true) {
+            currentpage = false;
+        }
     }
 
     socket.onclose = function(e) {
