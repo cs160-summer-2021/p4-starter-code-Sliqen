@@ -7,6 +7,7 @@
     <title>P4 Drawing</title>
 
     <link rel="stylesheet" type="text/css" href="{% static 'draw/vendor/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'draw/css/index.css' %}" />
     <script type="text/javascript" src="{% static 'draw/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'draw/vendor/paper/paper-full.min.js' %}"></script>
 
@@ -15,79 +16,152 @@
 
 </head>
 <body>
-    <!-- You may change the dimensions of this canvas -->
-    <canvas id="myCanvas" width="750px" height="750px"></canvas>
+    <div>
+
+
+    <!-- Explanation:
+        Currently working on making things clickable. Can't get coordinates right for some reason.
+        https://www.w3schools.com/html/html_images_imagemap.asp <-- Doesn't work as well for some reason
+        Need to make things look good.
+
+
+    -->
+
+    <img src="https://i.ibb.co/2tvpQXm/Italy-Political-Map.jpg" id="myimg" usemap="#touchmap">
+    <map name="touchmap">
+        <area shape="rect" coords="50,50,100,100" onclick='romeClick()'>
+        <!-- <area shape="circle" coords="150,150,30"> -->
+    </map> 
+
+    <!-- EXAMPLE OF SUBMITTING SOMETHING --> 
+    <img src="https://i.ibb.co/bPr21h7/transparentpin.png" id="pinimgRome">
+    <figure id="colosseumWrap">
+        <img src="https://i.ibb.co/BLvSdZn/colosseum.jpg" id="colosseum">
+        <figcaption id="colosseumText"> </figcaption>
+    </figure>
+
+    <!-- FORM FOR SUBMITTING REVIEW --> 
+    <form class='mytxt' name='areaform' id="locForm">
+        <label for='myform'> Choose an area!</label>
+        <br>
+        <input type='textarea' id='myform' value=''>
+        <input type='submit' onclick='getArea(); return false'> </input>
+        </input>
+    </form>
+    
+    <!-- FORM FOR SUBMITTING REVIEW -->
+    <form class='mytxt' name='postform' id='reviewForm'> 
+        <label for='myform2'> Submit a review!</label>
+        <br><br> 
+        <input type='textarea' id='myform2' value=''>
+
+        <br><br> 
+        <label for="img">Select image:</label>
+        <input type="file" id="img" name="img" accept="image/*">
+
+        <br><br> 
+        <input type='submit' onclick='getReview(); return false'> </input>
+    </form>
+
+    </div>
+
 </body>
 <script>
 
-
-    var currentpage = false;
-    let allcolors = ['red', 'blue', 'green', 'orange', 'pink', 'Purple', 'Aqua', 'Black', 'Brown', 'Coral', 'Cyan', 'ForestGreen', 'Gray', 'HotPink', 'Indigo', 'MediumBlue', 'RosyBrown'];
-    // setting up the canvas and one paper tool
-    var canvas = document.getElementById('myCanvas');
-    paper.setup(canvas);
-    var tool = new paper.Tool();
-    var path = new paper.Path();
-    var uid = Date.now() % 10000;
-    var mycolor = allcolors[Math.floor(Math.random() * 18)];
-    path.strokeColor = mycolor;
-
-    // getting the URL (you may want to use for Exercise 3)
-    // is a string
+    // INITIAL SETUP 
+    // CHECKS WHICH URL WE ARE ON
     var url = window.location.href;
-    var thesize = url.substring(url.length - 5);
+    var thesize = url.substring(url.length - 7);
+    var isDisplay = false;
+    var isPhoneSB = false;
+    var isPhoneTS = false;
 
-    var isSmall = 5;
-    if (thesize.valueOf() == "small") {
-        isSmall = true;
+    // We either have ?look= [display], [phoneSB], or [phoneTS]
+    // These are the three coresponding web instances like proj3
+    if (thesize.valueOf() == "display") {
+        isDisplay = true;
+        console.log("Display");
     }
-    if (thesize.valueOf() == "large") {
-        isSmall = false;
+    if (thesize.valueOf() == "phoneSB") {
+        isPhoneSB = true;
+        console.log("PSB");
     }
-
-    var socket = new WebSocket(
-        'ws://' + window.location.host + '/ws/draw');
-
-    tool.onMouseDown = function(event) {
-        socket.send("{\"mouse\" : " + null + ", \"color\" : " + JSON.stringify(mycolor) +  "}" );       
-    }
-
-    tool.onMouseDrag = function(event) { //http://paperjs.org/reference/tool/ path examples
-       path.strokeColor = mycolor;
-       path.add(event.point);
-       // You may need to add code here if you want to pass any other information.
-       socket.send("{\"x\" : " + event.point.x + ", \"y\" : " + event.point.y + ", \"uid\" : " + uid
-       + ", \"color\" : " + JSON.stringify(mycolor) + ", \"mouse\" : " + JSON.stringify(mycolor) + "}" );
+    if (thesize.valueOf() == "phoneTS") {
+        isPhoneTS = true;
+        console.log("PTS");
     }
 
-    socket.onmessage = function(receivedMessage) {
+    // function initDisplay() {
+    //     $("#pinimgRome").hide();
+    //     $("#reviewForm").hide();
+    //     $("#colosseumWrap").hide(); 
+    //     $("#locForm").hide();   
+    // }
 
-        if (isSmall === false) {
-            var received = JSON.parse(receivedMessage.data);
-            
-            if (received.mouse === null && currentpage === false) {
-                path = new paper.Path();
-                path.strokeColor = received.color;
-            } else {
-                console.log("Received: " + JSON.stringify(received));
-                // You will probably want to add some code here to draw more lines.
-                path.strokeColor = received.color;
-                var newpt = new paper.Point(received.x, received.y);
+    // function initPhoneSB() {
+    //     $("#pinimgRome").hide();
+    //     $("#reviewForm").hide();
+    //     $("#colosseumWrap").hide(); 
+    //     // $("#locForm").hide();       
+    // }
 
-                if (currentpage === false) {
-                    path.strokeColor = received.color;
-                    path.add(newpt);
-                }
-                else {
-                    currentpage = false;
-                }
-            }
+    // function initPhoneTS() {
+    //     $("#pinimgRome").hide();
+    //     $("#reviewForm").hide();
+    //     $("#colosseumWrap").hide(); 
+    //     $("#locForm").hide();    
+    // }
+
+
+    // ********* MAKE THESE GREEN TO LOOK AT THEM AND SEE IF THEIR CSS IS GOOD ********
+    $("#pinimgRome").hide();
+    $("#reviewForm").hide();
+    $("#colosseumWrap").hide(); 
+    $("#locForm").hide();   
+
+
+
+    function romeClick() {
+        // document.areaform.myform.value = Rome;
+        // $("#reviewForm").show();
+        console.log("Rome");
+    }
+
+
+    function getArea() {
+        console.log(document.areaform.myform.value);
+        console.log(typeof JSON.stringify(myArea));
+
+        var myArea = document.areaform.myform.value;
+        if (myArea.valueOf() == "Rome" || myArea.valueOf() == "Caligan" 
+        || myArea.valueOf() == "Austria" || myArea.valueOf() == "Rome") {
+            $("#locForm").hide();
+            $("#reviewForm").show();
+        } else {
+            return;
         }
     }
 
-    socket.onclose = function(e) {
-        console.error('Chat socket closed unexpectedly');
-    };
+
+    function getReview() { 
+        $("#reviewForm").hide();
+        var myReview = document.postform.myform2.value;
+        console.log(myReview);
+        $("#colosseumText").append("Place: " + document.areaform.myform.value + "<br>");
+        $("#colosseumText").append(myReview);
+        $("#colosseumWrap").show(); 
+        $("#pinimgRome").show(); 
+    }
+
+    // if (isDisplay) {
+    //     initDisplay();
+    // } else if (isPhoneSB) {
+    //     initPhoneSB();
+    // } else if (isPhoneTS) {
+    //     initPhoneTS();
+    // }
+
+
 
 </script>
 </html>

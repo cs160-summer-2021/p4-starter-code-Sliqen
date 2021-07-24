@@ -1,0 +1,90 @@
+/* New interactions CSS  */
+
+/* html, body {
+    height: 100%; 
+    width: 100%; 
+    margin: 0; 
+} */
+
+/* .myPicDisplay {
+    width: auto;
+    height: auto;
+    background-image: url("https://i.ibb.co/2tvpQXm/Italy-Political-Map.jpg");
+    background-repeat: no-repeat;
+}
+
+.myPicPhone {
+    width: 500px;
+    height: 500px;
+    background-image: url("https://i.ibb.co/2tvpQXm/Italy-Political-Map.jpg");
+    background-repeat: no-repeat;    
+} */
+
+#myimg {
+    width: 100%;
+    height: 100%;
+    opacity: 30%;
+    position: relative;
+    top: 0;
+    left: 0;
+    }
+
+#touchmap {
+    
+}    
+
+#pinimgRome {
+    position: absolute;
+    top: 790px;
+    left: 580px;
+    /* width: 100px;
+    height: 200px; */
+    }
+
+#colosseum {
+    position: absolute;
+    top: 500px;
+    left: 400px;
+    width: auto;
+    height: 250px;
+}
+
+#colosseumText {
+    position: absolute;
+    top: 750px;
+    left: 400px;
+    width: auto;
+    height: 250px;
+}
+
+#colosseumWrap {
+
+}
+
+#myform {
+
+}    
+
+#myform2 {
+
+}
+
+#mycolor {
+    background-color:whitesmoke;
+}
+
+
+
+.mytxt {
+    position: absolute;
+    top: 600px;
+    left: 350px;
+    }
+
+#locForm {
+
+}
+
+#reviewForm {
+
+}

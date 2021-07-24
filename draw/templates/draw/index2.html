@@ -1,0 +1,93 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>P4 Drawing</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'draw/vendor/bootstrap/css/bootstrap.min.css' %}">
+    <script type="text/javascript" src="{% static 'draw/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'draw/vendor/paper/paper-full.min.js' %}"></script>
+
+    <style type="text/css">
+    </style>
+
+</head>
+<body>
+    <!-- You may change the dimensions of this canvas -->
+    <canvas id="myCanvas" width="750px" height="750px"></canvas>
+</body>
+<script>
+
+
+    var currentpage = false;
+    let allcolors = ['red', 'blue', 'green', 'orange', 'pink', 'Purple', 'Aqua', 'Black', 'Brown', 'Coral', 'Cyan', 'ForestGreen', 'Gray', 'HotPink', 'Indigo', 'MediumBlue', 'RosyBrown'];
+    // setting up the canvas and one paper tool
+    var canvas = document.getElementById('myCanvas');
+    paper.setup(canvas);
+    var tool = new paper.Tool();
+    var path = new paper.Path();
+    var uid = Date.now() % 10000;
+    var mycolor = allcolors[Math.floor(Math.random() * 18)];
+    path.strokeColor = mycolor;
+
+    // getting the URL (you may want to use for Exercise 3)
+    // is a string
+    var url = window.location.href;
+    var thesize = url.substring(url.length - 5);
+
+    var isSmall = 5;
+    if (thesize.valueOf() == "small") {
+        isSmall = true;
+    }
+    if (thesize.valueOf() == "large") {
+        isSmall = false;
+    }
+
+    var socket = new WebSocket(
+        'ws://' + window.location.host + '/ws/draw');
+
+    tool.onMouseDown = function(event) {
+        socket.send("{\"mouse\" : " + null + ", \"color\" : " + JSON.stringify(mycolor) +  "}" );       
+    }
+
+    tool.onMouseDrag = function(event) { //http://paperjs.org/reference/tool/ path examples
+       path.strokeColor = mycolor;
+       path.add(event.point);
+       // You may need to add code here if you want to pass any other information.
+       socket.send("{\"x\" : " + event.point.x + ", \"y\" : " + event.point.y + ", \"uid\" : " + uid
+       + ", \"color\" : " + JSON.stringify(mycolor) + ", \"mouse\" : " + JSON.stringify(mycolor) + "}" );
+    }
+
+    socket.onmessage = function(receivedMessage) {
+
+        if (isSmall === false) {
+            var received = JSON.parse(receivedMessage.data);
+            
+            if (received.mouse === null && currentpage === false) {
+                path = new paper.Path();
+                path.strokeColor = received.color;
+            } else {
+                console.log("Received: " + JSON.stringify(received));
+                // You will probably want to add some code here to draw more lines.
+                path.strokeColor = received.color;
+                var newpt = new paper.Point(received.x, received.y);
+
+                if (currentpage === false) {
+                    path.strokeColor = received.color;
+                    path.add(newpt);
+                }
+                else {
+                    currentpage = false;
+                }
+            }
+        }
+    }
+
+    socket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+</script>
+</html>
