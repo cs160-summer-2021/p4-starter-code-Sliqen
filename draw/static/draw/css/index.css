@@ -1,25 +1,3 @@
-/* New interactions CSS  */
-
-/* html, body {
-    height: 100%; 
-    width: 100%; 
-    margin: 0; 
-} */
-
-/* .myPicDisplay {
-    width: auto;
-    height: auto;
-    background-image: url("https://i.ibb.co/2tvpQXm/Italy-Political-Map.jpg");
-    background-repeat: no-repeat;
-}
-
-.myPicPhone {
-    width: 500px;
-    height: 500px;
-    background-image: url("https://i.ibb.co/2tvpQXm/Italy-Political-Map.jpg");
-    background-repeat: no-repeat;    
-} */
-
 #myimg {
     width: 100%;
     height: 100%;
@@ -29,28 +7,22 @@
     }
 
 .imgOpacity {
-    opacity: 90%;
+    opacity: 100%;
 }
 
 .imgOpacitySB {
-    opacity: 30%;
+    opacity: 45%;
 }
 
-#touchmap {
-    
-}    
-
+/* Rome */
 #figtextRome {
-
 }
 
 #pinimgRome {
     position: absolute;
     top: 1040px;
     left: 740px;
-    /* width: 100px;
-    height: 200px; */
-    }
+}
 
 #colosseum {
     position: absolute;
@@ -69,17 +41,14 @@
 }
 
 #colosseumWrap {
-
 }
 
-/* Tunisia */
 
+/* Tunisia */
 #pinimgTunisia {
     position: absolute;
     top: 1950px;
     left: 400px;
-    /* width: 100px;
-    height: 200px; */
     }
 
 #tunisia {
@@ -91,11 +60,9 @@
 }
 
 #tunisiaWrap{
-
 }
 
 #figtextTunisia {
-
 }
 
 #tunisiaText {
@@ -108,35 +75,31 @@
 
 
 /* Florence */
-
 #pinimgFlorence {
     position: absolute;
     top: 720px;
-    left: 590px;
-    /* width: 100px;
-    height: 200px; */
-    }
+    left: 500px;
+    transform: scaleX(-1);
+}
 
 #florence {
     position: absolute;
-    top: 330px;
-    left: 440px;
+    top: 360px;
+    left: 320px;
     width: auto;
     height: 250px;    
 }
 
 #florenceWrap{
-
 }
 
 #figtextFlorence {
-
 }
 
 #florenceText {
     position: absolute;
-    top: 580PX;
-    left: 440px;
+    top: 610px;
+    left: 320px;
     width: auto;
     height: 250px;
 }
@@ -144,64 +107,182 @@
 
 
 /* Milan */
-
 #pinimgMilan {
     position: absolute;
     top: 440px;
-    left: 330px;
+    left: 220px;
+    transform: scaleX(-1);
     }
 
 #milan {
     position: absolute;
     top: 100px;
-    left: 160px;
+    left: 80px;
     width: auto;
     height: 250px;    
 }
 
 #milanWrap{
-
 }
 
 #figtextmilan {
-
 }
 
 #milanText {
     position: absolute;
     top: 360px;
-    left: 160px;
-    width: auto;
-    height: 250px;
+    left: 80px;
+}
+
+#squareRome {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    top: 630px;
+    left: 380px;
+}
+
+#squareTunisia {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    top: 1130px;
+    left: 100px;
+}
+
+#squareFlorence {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    top: 440px;
+    left: 330px;
+}
+
+#squareMilan {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    top: 260px;
+    left: 140px;
+}
+
+#background-form1 {
+    position: absolute;
+    top: 700px;
+    left: 600px;
+    width: 385px;
+    height: 330px;
+    outline: 10px;
+    outline-width: thick;
+    outline-style: outset;
+    outline-color: red;
+    background-color: whitesmoke;
+}
+
+#background-form2 {
+    position: absolute;
+    top: 1600px;
+    left: 280px;
+    width: 375px;
+    height: 330px;
+    outline: 10px;
+    outline-width: thick;
+    outline-style: outset;
+    outline-color: red;
+    background-color: whitesmoke;
+}
+
+#background-form3 {
+    position: absolute;
+    top: 360px;
+    left: 320px;
+    width: 445px;
+    height: 330px;
+    outline: 10px;
+    outline-width: thick;
+    outline-style: outset;
+    outline-color: red;
+    background-color: whitesmoke;
+}
+
+#background-form4 {
+    position: absolute;
+    top: 100px;
+    left: 80px;
+    width: 374px;
+    height: 330px;
+    outline: 10px;
+    outline-width: thick;
+    outline-style: outset;
+    outline-color: red;
+    background-color: whitesmoke;
 }
 
 
+#background-form5 {
+    position: absolute;
+    top: 550px;
+    left: 305px;
+    width: 400px;
+    height: 230px;
+    outline: 30px;
+    outline-width: thick;
+    outline-style: outset;
+    outline-color: goldenrod;
+    background-color: whitesmoke;
+}
 
+#background-form6 {
+    position: absolute;
+    top: 550px;
+    left: 305px;
+    width: 400px;
+    height: 250px;
+    outline: 30px;
+    outline-width: thick;
+    outline-style: outset;
+    outline-color: green;
+    background-color: whitesmoke;
+}
+
+#areaChoose {
+    font-weight: bold;
+    font-size: 25px;
+}
+
+#reviewSubmit {
+    font-weight: bold;
+    font-size: 25px;    
+}
+
+.zBack {
+    z-index: -1;
+}
 
 #myform {
-
 }    
 
 #myform2 {
-
 }
 
 #mycolor {
     background-color:whitesmoke;
+    position: absolute;
+    length: 500px;
+    width: 500px;
+    top: 440px;
+    left: 330px;
 }
-
 
 
 .mytxt {
     position: absolute;
     top: 600px;
     left: 350px;
-    }
+}
 
 #locForm {
-
 }
 
 #reviewForm {
-
 }
