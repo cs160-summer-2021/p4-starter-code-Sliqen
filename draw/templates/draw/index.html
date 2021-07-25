@@ -28,17 +28,59 @@
     -->
 
     <img src="https://i.ibb.co/2tvpQXm/Italy-Political-Map.jpg" id="myimg" usemap="#touchmap">
-    <map name="touchmap">
+    <!-- <map name="touchmap">
         <area shape="rect" coords="50,50,100,100" onclick='romeClick()'>
-        <!-- <area shape="circle" coords="150,150,30"> -->
-    </map> 
+         <area shape="circle" coords="150,150,30"> -->
+    </map>  
 
-    <!-- EXAMPLE OF SUBMITTING SOMETHING --> 
+    <!-- ROME -->
     <img src="https://i.ibb.co/bPr21h7/transparentpin.png" id="pinimgRome">
     <figure id="colosseumWrap">
         <img src="https://i.ibb.co/BLvSdZn/colosseum.jpg" id="colosseum">
-        <figcaption id="colosseumText"> </figcaption>
+        <div id="figtextRome">
+            <!-- <figcaption id="colosseumText">DDDDDDDDDDD </figcaption> -->
+            
+        </div>  
     </figure>
+
+
+    <!-- TUNISIA -->
+    <img src="https://i.ibb.co/bPr21h7/transparentpin.png" id="pinimgTunisia">
+    <figure id="tunisiaWrap">
+        <img src="https://i.ibb.co/jr0vMBf/tunisiaview.jpg" id="tunisia">
+        <div id="figtextTunisia">
+            <!-- <figcaption id="tunisiaText">CCCCCCCCCCC </figcaption> -->
+            
+        </div>  
+    </figure>
+
+
+
+
+    <!-- FLORENCE -->
+    <img src="https://i.ibb.co/bPr21h7/transparentpin.png" id="pinimgFlorence">
+    <figure id="florenceWrap">
+        <img src="https://i.ibb.co/bRJ1n9X/Florence.jpg" id="florence">
+        <div id="figtextFlorence">
+            <!-- <figcaption id="florenceText"> BBBBBBBBB </figcaption> -->
+            
+        </div>  
+    </figure>
+
+
+    
+    <img src="https://i.ibb.co/bPr21h7/transparentpin.png" id="pinimgMilan">
+    <figure id="milanWrap">
+        <img src="https://i.ibb.co/HB5hKTc/Milan.jpg" id="milan">
+        <div id="figtextMilan">
+            <!-- <figcaption id="milanText"> AAAAAAA </figcaption> -->
+            
+        </div>  
+    </figure>
+
+
+
+
 
     <!-- FORM FOR SUBMITTING REVIEW --> 
     <form class='mytxt' name='areaform' id="locForm">
@@ -56,10 +98,10 @@
         <input type='textarea' id='myform2' value=''>
 
         <br><br> 
-        <label for="img">Select image:</label>
-        <input type="file" id="img" name="img" accept="image/*">
+        <!-- <label for="img">Select image:</label>
+        <input type="file" id="img" name="img" accept="image/*"> -->
 
-        <br><br> 
+        <!-- <br><br>  -->
         <input type='submit' onclick='getReview(); return false'> </input>
     </form>
 
@@ -72,9 +114,11 @@
     // CHECKS WHICH URL WE ARE ON
     var url = window.location.href;
     var thesize = url.substring(url.length - 7);
+    console.log(thesize);
     var isDisplay = false;
     var isPhoneSB = false;
     var isPhoneTS = false;
+    var myLocations = [];
 
     // We either have ?look= [display], [phoneSB], or [phoneTS]
     // These are the three coresponding web instances like proj3
@@ -91,50 +135,84 @@
         console.log("PTS");
     }
 
-    // function initDisplay() {
-    //     $("#pinimgRome").hide();
-    //     $("#reviewForm").hide();
-    //     $("#colosseumWrap").hide(); 
-    //     $("#locForm").hide();   
-    // }
 
-    // function initPhoneSB() {
-    //     $("#pinimgRome").hide();
-    //     $("#reviewForm").hide();
-    //     $("#colosseumWrap").hide(); 
-    //     // $("#locForm").hide();       
-    // }
 
-    // function initPhoneTS() {
-    //     $("#pinimgRome").hide();
-    //     $("#reviewForm").hide();
-    //     $("#colosseumWrap").hide(); 
-    //     $("#locForm").hide();    
-    // }
 
+
+
+
+
+    function initDisplay() {
+        var elem =  document.getElementById("myimg");
+        elem.classList.add("imgOpacity");
+        $("#reviewForm").hide();
+        $("#pinimgRome").hide();
+        $("#colosseumWrap").hide(); 
+        $("#pinimgTunisia").hide();
+        $("#tunisiaWrap").hide();
+        $("#pinimgFlorence").hide();
+        $("#florenceWrap").hide();
+        $("#pinimgMilan").hide();
+        $("#milanWrap").hide();
+        $("#locForm").hide();   
+    }
+
+    function initPhoneSB() {
+        var elem =  document.getElementById("myimg");
+        elem.classList.add("imgOpacitySB");
+        $("#pinimgRome").hide();
+        $("#reviewForm").hide();
+        $("#colosseumWrap").hide();
+        $("#pinimgTunisia").hide();
+        $("#tunisiaWrap").hide();
+        $("#pinimgFlorence").hide();
+        $("#florenceWrap").hide();
+        $("#pinimgMilan").hide();
+        $("#milanWrap").hide();
+        // $("#locForm").hide();       
+    }
+
+    function initPhoneTS() {
+        var elem =  document.getElementById("myimg");
+        elem.classList.add("imgOpacity");
+        $("#pinimgRome").hide();
+        $("#reviewForm").hide();
+        $("#pinimgRome").hide();
+        $("#colosseumWrap").hide(); 
+        $("#pinimgTunisia").hide();
+        $("#tunisiaWrap").hide();
+        $("#pinimgFlorence").hide();
+        $("#florenceWrap").hide();
+        $("#pinimgMilan").hide();
+        $("#milanWrap").hide();
+        $("#locForm").hide();    
+    }
+
+    var socket = new WebSocket(
+        'ws://' + window.location.host + '/ws/draw');
 
     // ********* MAKE THESE GREEN TO LOOK AT THEM AND SEE IF THEIR CSS IS GOOD ********
-    $("#pinimgRome").hide();
-    $("#reviewForm").hide();
-    $("#colosseumWrap").hide(); 
-    $("#locForm").hide();   
+    // $("#pinimgRome").hide();
+    // $("#reviewForm").hide();
+    // $("#colosseumWrap").hide(); 
+    // $("#locForm").hide();   
 
 
 
-    function romeClick() {
-        // document.areaform.myform.value = Rome;
-        // $("#reviewForm").show();
-        console.log("Rome");
-    }
+    // function romeClick() {
+    //     // document.areaform.myform.value = Rome;
+    //     // $("#reviewForm").show();
+    //     console.log("Rome");
+    // }
 
 
     function getArea() {
-        console.log(document.areaform.myform.value);
-        console.log(typeof JSON.stringify(myArea));
-
         var myArea = document.areaform.myform.value;
-        if (myArea.valueOf() == "Rome" || myArea.valueOf() == "Caligan" 
-        || myArea.valueOf() == "Austria" || myArea.valueOf() == "Rome") {
+        console.log(document.areaform.myform.value);
+
+        if (myArea.valueOf() == "Rome" || myArea.valueOf() == "Tunisia" 
+        || myArea.valueOf() == "Florence" || myArea.valueOf() == "Milan" ) {
+            console.log("got area.")
             $("#locForm").hide();
             $("#reviewForm").show();
         } else {
@@ -146,22 +224,178 @@
     function getReview() { 
         $("#reviewForm").hide();
         var myReview = document.postform.myform2.value;
+        var myPlace = document.areaform.myform.value;
         console.log(myReview);
-        $("#colosseumText").append("Place: " + document.areaform.myform.value + "<br>");
-        $("#colosseumText").append(myReview);
-        $("#colosseumWrap").show(); 
-        $("#pinimgRome").show(); 
+        socket.send("{\"review\" : " + JSON.stringify(myReview) + ", \"place\" : " + JSON.stringify(myPlace) +  "}" ); 
+        document.postform.myform2.value = "";
+        document.areaform.myform.value = "";
+        $("#locForm").show();
     }
 
-    // if (isDisplay) {
-    //     initDisplay();
-    // } else if (isPhoneSB) {
-    //     initPhoneSB();
-    // } else if (isPhoneTS) {
-    //     initPhoneTS();
-    // }
+
+    function hideAll() {
+        $("#colosseumWrap").hide(); 
+        $("#tunisiaWrap").hide();
+        $("#florenceWrap").hide();
+        $("#milanWrap").hide();
+    }
+
+    // Call to hide all other imgs & subtext other than passed in location
+    function onlyOneImg(inputArea) {
+        hideAll();
+        if (inputArea === "Rome") {
+            $("#colosseumWrap").show(); 
+        }
+        if (inputArea === "Tunisia") {
+            $("#tunisiaWrap").show();
+        }
+        if (inputArea === "Florence") {
+            $("#florenceWrap").show();
+        }
+        if (inputArea === "Milan") {
+            $("#milanWrap").show();
+        }
+    }
 
 
+
+    socket.onmessage = function(receivedMessage) {
+        var received = JSON.parse(receivedMessage.data);
+        console.log("got it");
+
+
+
+        // ROME
+        if ((isDisplay) && (received.place === "Rome")) {
+            console.log("into it");    
+            var thetxt = document.getElementById("colosseumText");
+
+            if (thetxt === null) {
+                myLocations.push("Rome");
+            }
+
+            onlyOneImg("Rome");
+
+            if (thetxt != null) {
+                thetxt.remove();
+            }
+            $("#figtextRome").append("<figcaption id='colosseumText'>" + "Place: " + received.place + "<br>"
+                + JSON.stringify(received.review) + "</figcaption>")
+            $("#colosseumWrap").show(); 
+            $("#pinimgRome").show(); 
+        }
+
+
+        // TUNISIA
+        if ((isDisplay) && (received.place == "Tunisia")) {
+            var thetxt = document.getElementById("tunisiaText");
+
+            if (thetxt === null) {
+                myLocations.push("Tunisia");
+            }
+
+            onlyOneImg("Tunisia");
+
+            if (thetxt != null) {
+                thetxt.remove();
+            }
+            $("#figtextTunisia").append("<figcaption id='tunisiaText'>" + "Place: " + received.place + "<br>"
+                + JSON.stringify(received.review) + "</figcaption>")
+            $("#tunisiaWrap").show(); 
+            $("#pinimgTunisia").show(); 
+            $("#tunisia").show();
+        }
+
+
+        // FLORENCE
+        if ((isDisplay) && (received.place == "Florence")) {
+            var thetxt = document.getElementById("florenceText");
+
+            if (thetxt === null) {
+                myLocations.push("Florence");
+            }
+
+            onlyOneImg("Florence");
+
+            if (thetxt != null) {
+                thetxt.remove();
+            }
+            $("#figtextFlorence").append("<figcaption id='florenceText'>" + "Place: " + received.place + "<br>"
+                + JSON.stringify(received.review) + "</figcaption>")
+            $("#florenceWrap").show(); 
+            $("#pinimgFlorence").show(); 
+            $("#florence").show();
+        }
+
+
+        // MILAN
+        if ((isDisplay) && (received.place == "Milan")) {
+            var thetxt = document.getElementById("milanText");
+
+            if (thetxt === null) {
+                myLocations.push("Milan");
+            }
+
+            onlyOneImg("Milan");
+
+            if (thetxt != null) {
+                thetxt.remove();
+            }
+            $("#figtextMilan").append("<figcaption id='milanText'>" + "Place: " + received.place + "<br>"
+                + JSON.stringify(received.review) + "</figcaption>")
+            $("#milanWrap").show(); 
+            $("#pinimgMilan").show(); 
+            $("#milan").show();
+        }
+
+    }
+
+    
+    console.log(isPhoneSB);
+    if (isDisplay) {
+        initDisplay();
+    } 
+    
+    if (isPhoneSB) {
+        initPhoneSB();
+    } 
+    
+    if (isPhoneTS) {
+        initPhoneTS();
+    }
+
+
+    function rotatePins() {
+
+        if ((myLocations.length < 2) || (!isDisplay)) {
+            return;
+        }
+
+        console.log("sucess");
+        var firstPlace = myLocations[0];
+        myLocations.shift();
+        myLocations.push(firstPlace);
+
+        hideAll();
+
+        if (firstPlace === "Tunisia") {
+            $("#tunisiaWrap").show();
+        }
+        if (firstPlace === "Rome") {
+            $("#colosseumWrap").show();
+        }
+        if (firstPlace === "Florence") {
+            $("#florenceWrap").show();
+        }
+        if (firstPlace === "Milan") {
+            $("#milanWrap").show();
+        }
+        
+    }
+
+
+
+    setInterval(rotatePins, 6000);
 
 </script>
 </html>
